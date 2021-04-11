@@ -9,7 +9,7 @@ import { Post } from './post';
 })
 export class PostService {
 
-  private serverUrl = 'http://localhost:2130/'
+  private serverUrl = 'http://localhost:2130'
 
   constructor(private http: HttpClient) { }
 
@@ -26,6 +26,13 @@ export class PostService {
     return this.http.get<Post[]>(this.serverUrl)
       .pipe(
         catchError(this.handleError<Post[]>('getPosts', []))
+      )
+  }
+
+  getPost(postId: number): Observable<Post> {
+    return this.http.get<Post>(`${this.serverUrl}/${postId}`)
+      .pipe(
+        catchError(this.handleError<Post>('getPost'))
       )
   }
 }
