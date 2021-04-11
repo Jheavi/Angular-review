@@ -7,7 +7,9 @@
     <div class="modal-container">
       <span>Are you sure you want to delete the post?</span>
       <div class="buttons">
-        <button class="delete-button">Accept</button>
+        <button class="delete-button" (click)="confirmDeletePost()">
+          Accept
+        </button>
         <button (click)="closeDeleteModal()">Cancel</button>
       </div>
     </div>

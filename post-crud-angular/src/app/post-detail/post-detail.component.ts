@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Post } from '../post';
@@ -16,7 +17,8 @@ export class PostDetailComponent implements OnInit {
 
   constructor(
     private postService: PostService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
     ) { }
 
   getPost(): void {
@@ -37,5 +39,10 @@ export class PostDetailComponent implements OnInit {
 
   closeDeleteModal(): void {
     this.deleteModalVisible = false
+  }
+
+  confirmDeletePost(): void {
+    this.postService.deletePost(this.post!.id).subscribe()
+    this.location.back()
   }
 }
