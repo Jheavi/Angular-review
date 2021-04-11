@@ -2,6 +2,16 @@
   <h2>{{ post.title | titlecase }}</h2>
   <span>Id: {{ post.id }}</span>
   <span>{{ post.body | firstupper }}</span>
+  <button class="delete-button" (click)="openDeleteModal()">Delete</button>
+  <div class="modal-mask" *ngIf="deleteModalVisible">
+    <div class="modal-container">
+      <span>Are you sure you want to delete the post?</span>
+      <div class="buttons">
+        <button class="delete-button">Accept</button>
+        <button (click)="closeDeleteModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
 </div>
 <ng-template #noPost>
   <h2>There is no post with this id</h2>

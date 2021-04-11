@@ -12,6 +12,8 @@ export class PostDetailComponent implements OnInit {
 
   post?: Post
 
+  deleteModalVisible = false
+
   constructor(
     private postService: PostService,
     private route: ActivatedRoute
@@ -29,4 +31,11 @@ export class PostDetailComponent implements OnInit {
     this.getPost()
   }
 
+  openDeleteModal(): void {
+    this.deleteModalVisible = true
+  }
+
+  closeDeleteModal(): void {
+    this.deleteModalVisible = false
+  }
 }
