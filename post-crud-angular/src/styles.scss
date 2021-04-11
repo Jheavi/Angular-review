@@ -10,3 +10,13 @@
 li {
   list-style-type: none;
 }
+
+a {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+
+  &:visited {
+    color: inherit;
+  }
+}
