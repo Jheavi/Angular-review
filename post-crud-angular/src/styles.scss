@@ -20,3 +20,29 @@ a {
     color: inherit;
   }
 }
+
+button {
+  margin: 10px;
+  min-width: 100px;
+  min-height: 30px;
+  border: none;
+  padding: 10px;
+  font-weight: 600;
+  border-radius: 5px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  cursor: pointer;
+
+  &:focus {
+    outline: 1px solid black;
+  }
+
+  &.delete-button {
+    color: #ffffff;
+    background-color: #cf0000;
+  }
+
+  &.save-button {
+    color: #ffffff;
+    background-color: #2b8600;
+  }
+}
