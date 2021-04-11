@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { catchError } from "rxjs/operators";
-import { HttpClient } from '@angular/common/http';
+import { Observable, of, Subject } from 'rxjs';
+import { catchError, tap } from "rxjs/operators";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Post } from './post';
 
 @Injectable({
@@ -10,6 +10,12 @@ import { Post } from './post';
 export class PostService {
 
   private serverUrl = 'http://localhost:2130'
+
+  private httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  }
+
+  posts$ = new Subject<Post[]>()
 
   constructor(private http: HttpClient) { }
 
@@ -25,14 +31,26 @@ export class PostService {
   getPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(this.serverUrl)
       .pipe(
+        tap((posts) => this.posts$.next(posts)),
         catchError(this.handleError<Post[]>('getPosts', []))
       )
   }
 
   getPost(postId: number): Observable<Post> {
-    return this.http.get<Post>(`${this.serverUrl}/${postId}`)
+    const url = `${this.serverUrl}/${postId}`
+
+    return this.http.get<Post>(url)
       .pipe(
         catchError(this.handleError<Post>('getPost'))
+      )
+    }
+
+    deletePost(postId: number): Observable<string> {
+    const url = `${this.serverUrl}/${postId}`
+
+    return this.http.delete<string>(url, this.httpOptions)
+      .pipe(
+        catchError(this.handleError<string>('deletePost'))
       )
   }
 }
