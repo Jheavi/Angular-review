@@ -1,1 +1,8 @@
-<p>post-detail works!</p>
+<div class="post-container" *ngIf="post; else noPost">
+  <h2>{{ post.title | titlecase }}</h2>
+  <span>Id: {{ post.id }}</span>
+  <span>{{ post.body | firstupper }}</span>
+</div>
+<ng-template #noPost>
+  <h2>There is no post with this id</h2>
+</ng-template>

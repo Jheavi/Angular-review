@@ -6,12 +6,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PostsListComponent } from './posts-list/posts-list.component';
 import { PostDetailComponent } from './post-detail/post-detail.component';
+import { FirstupperPipe } from './firstupper.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     PostsListComponent,
-    PostDetailComponent
+    PostDetailComponent,
+    FirstupperPipe
   ],
   imports: [
     BrowserModule,
