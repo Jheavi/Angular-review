@@ -43,14 +43,23 @@ export class PostService {
       .pipe(
         catchError(this.handleError<Post>('getPost'))
       )
-    }
+  }
 
-    deletePost(postId: number): Observable<string> {
-    const url = `${this.serverUrl}/${postId}`
+  deletePost(postId: number): Observable<string> {
+  const url = `${this.serverUrl}/${postId}`
 
-    return this.http.delete<string>(url, this.httpOptions)
+  return this.http.delete<string>(url, this.httpOptions)
+    .pipe(
+      catchError(this.handleError<string>('deletePost'))
+    )
+  }
+
+  updatePost(postToUpdate: Post): Observable<Post> {
+    const url = `${this.serverUrl}/${postToUpdate.id}`
+
+    return this.http.put<Post>(url, { postToUpdate }, this.httpOptions)
       .pipe(
-        catchError(this.handleError<string>('deletePost'))
+        catchError(this.handleError<Post>('updatePost'))
       )
   }
 }
