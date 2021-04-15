@@ -1,8 +1,49 @@
 <div class="post-container" *ngIf="post; else noPost">
-  <h2>{{ post.title | titlecase }}</h2>
+  <h2 *ngIf="!isTitleEditable; else editTitle">
+    {{ postForm.value.postTitle | firstupper }}
+  </h2>
+  <ng-template #editTitle>
+    <form [ngStyle]="{ 'width.px': width }" [formGroup]="postForm">
+      <input
+        id="inputTextID"
+        type="text"
+        formControlName="postTitle"
+        (paste)="resize()"
+        (cut)="resize()"
+        (input)="resize()"
+        class="edit-title"
+      />
+    </form>
+    <span #invisibleText class="hidden-span">{{ post.title }}</span>
+  </ng-template>
+  <button class="edit-button" (click)="toggleEditTitle()">Edit title</button>
   <span>Id: {{ post.id }}</span>
-  <span>{{ post.body | firstupper }}</span>
-  <button class="delete-button" (click)="openModal()">Delete</button>
+  <span *ngIf="!isBodyEditable; else editBody">{{
+    postForm.value.postBody | firstupper
+  }}</span>
+  <ng-template #editBody>
+    <form [formGroup]="postForm">
+      <textarea
+        type="text"
+        formControlName="postBody"
+        class="edit-body"
+        rows="10"
+        cols="60"
+      ></textarea>
+    </form>
+    <span #invisibleText class="hidden-span">{{ post.title }}</span>
+  </ng-template>
+  <button class="edit-button" (click)="toggleEditBody()">Edit body</button>
+  <div class="buttons">
+    <button
+      class="save-button"
+      *ngIf="isTitleEditable || isBodyEditable"
+      (click)="saveChanges()"
+    >
+      Save changes
+    </button>
+    <button class="delete-button" (click)="openModal()">Delete</button>
+  </div>
   <div class="modal-mask" *ngIf="modalVisible">
     <div class="modal-container">
       <span>Are you sure you want to delete the post?</span>
